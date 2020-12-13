@@ -33,13 +33,13 @@ def consolidate_all():
             final_data_frame = final_data_frame.append(result, ignore_index=True)
 
 
-    final_file_path = final_directory + '\\AllResults.csv'
+    final_file_path = final_directory + '\\AllResultsResampling.csv'
 
     final_data_frame.to_csv(final_file_path, sep=';')
 
-    ## Logic to create the file to compare each resampling algorithm
+    ## Logic to create the file to compare each classification algorithm
     unique_classification_algorithms = np.unique(final_data_frame['classifier'])
-    resampling_algorithm_comparison = pd.DataFrame(columns=unique_classification_algorithms)
+    classifier_comparison = pd.DataFrame(columns=unique_classification_algorithms)
 
     for resampling in columns:
         temp_df = pd.DataFrame(columns=unique_classification_algorithms)
@@ -48,8 +48,8 @@ def consolidate_all():
             column_to_be_updated = sub_data_frame[resampling]
             temp_df[algorithm] = column_to_be_updated.to_numpy()
             temp_df['resampling_algorithm'] = resampling
-        resampling_algorithm_comparison = resampling_algorithm_comparison.append(temp_df, ignore_index=True)
+        classifier_comparison = classifier_comparison.append(temp_df, ignore_index=True)
 
-    resampling_algorithm_comparison.to_csv(final_directory + '\\AllResultsResampling.csv', sep=';')
+    classifier_comparison.to_csv(final_directory + '\\AllResultsClassifiers.csv', sep=';')
     print('Finished parsing')
 
