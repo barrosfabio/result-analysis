@@ -39,7 +39,14 @@ def consolidate_each_class():
             df_size = partial_result.shape
             class_array = np.full(shape=(df_size[0]), fill_value=str(directory))
 
+            avg_results = partial_result.describe()
+            mean = avg_results['mean']
+            std = avg_results['std']
+            partial_result = partial_result.append(mean)
+            partial_result = partial_result.append(std)
+            class_array = class_array.append(['mean','std'])
             partial_result['classifier'] = class_array
+
             final_data_frame = final_data_frame.append(partial_result, ignore_index=True)
 
         #Building the final result path

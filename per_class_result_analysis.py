@@ -67,10 +67,10 @@ def calculate_ranks(figure_path, data_frame, algorithm_analyzed):
 	plt.show()
 
 
-results_file_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\consolidated\\all\\'
-analysis_results_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\overall_analysis'
-classifier_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\overall_analysis\\classifier'
-resampling_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\overall_analysis\\resampling'
+results_file_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\consolidated_per_class\\'
+analysis_results_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class_analysis'
+classifier_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class_analysis\\classifier'
+resampling_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class_analysis\\resampling'
 if not os.path.isdir(analysis_results_path):
 	os.mkdir(analysis_results_path)
 	os.mkdir(classifier_analysis)
@@ -84,7 +84,7 @@ for file in result_files:
 	file_path = results_file_path + file
 	result_data = pd.read_csv(file_path, sep=';')
 	last_column_name = result_data.keys()
-	analysis_type = str(last_column_name[-1])
+	analysis_type = last_column_name[-1]
 	analysis_target = np.unique(result_data[analysis_type])
 
 	p_values = []
@@ -101,9 +101,14 @@ for file in result_files:
 
 		# Calculate Overall Ranks and CD plots
 		if analysis_type == 'classifier':
-			figure_path = resampling_analysis + '\\' + algorithm
+			figure_path = resampling_analysis + '\\' + file[:-4] + '\\'
 		elif analysis_type == 'resampling_algorithm':
-			figure_path = classifier_analysis + '\\' + algorithm
+			figure_path = classifier_analysis + '\\' + file[:-4] + '\\'
+
+		if not os.path.isdir(figure_path):
+			os.mkdir(figure_path)
+
+		figure_path = figure_path + algorithm
 
 		if not os.path.isdir(figure_path):
 			os.mkdir(figure_path)

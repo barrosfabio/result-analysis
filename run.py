@@ -7,13 +7,13 @@ from per_class_consolidator import consolidate_each_class
 
 
 # First converting
-convert_to_one()
+#convert_to_one()
 
 # Extracting from Confusion Matrices pdfs
-extract_from_pdfs()
+#extract_from_pdfs()
 
 # Consolidating overall results
-consolidate_all()
+#consolidate_all()
 
 # Consolidating results for each class
 consolidate_each_class()

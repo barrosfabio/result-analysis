@@ -18,7 +18,7 @@ def write_df_csv(path, results_df):
 
 
 def extract_from_pdfs():
-    algorithms = ['dt','NB','svm','knn','mlp','rf','ext','gbdt','vot','stk']
+    algorithms = ['nb']
     per_class_dir = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class\\'
 
     if not os.path.isdir(per_class_dir):
