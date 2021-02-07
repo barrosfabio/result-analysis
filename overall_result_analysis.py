@@ -66,11 +66,12 @@ def calculate_ranks(figure_path, data_frame, algorithm_analyzed):
 	plt.savefig(figure_path + '\\cd_plot_' + algorithm_analyzed + '.pdf', bbox_inches='tight')
 	plt.show()
 
+results_directory = "C:\\Users\\Fabio Barros\\Desktop\\IJCNN Novos Resultados\\Rydls + C19 IDC\\"
+results_file_path =  results_directory + 'consolidated\\all\\'
+analysis_results_path = results_directory + 'overall_analysis'
+classifier_analysis = results_directory + '\\overall_analysis\\classifier'
+resampling_analysis = results_directory + '\\overall_analysis\\resampling'
 
-results_file_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\consolidated\\all\\'
-analysis_results_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\overall_analysis'
-classifier_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\overall_analysis\\classifier'
-resampling_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\overall_analysis\\resampling'
 if not os.path.isdir(analysis_results_path):
 	os.mkdir(analysis_results_path)
 	os.mkdir(classifier_analysis)

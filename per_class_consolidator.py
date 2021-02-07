@@ -5,28 +5,24 @@ import numpy as np
 
 columns = ['none', 'ros', 'smote', 'borderline', 'adasyn', 'smote-enn', 'smote-tomek']
 
-results_directory = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class'
-final_per_class_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\consolidated_per_class'
 
-def consolidate_each_class():
+def consolidate_each_class(results_directory, key_mapping):
+    final_directory = results_directory + 'per_class'
+    final_per_class_path = results_directory + '\\consolidated_per_class'
 
     if not os.path.isdir(final_per_class_path):
         os.mkdir(final_per_class_path)
 
-    class_list = {'0':'Bacterial_Klebsiella','1':'Bacterial_Legionella',
-                  '2':'Bacterial_Streptococcus','3':'Fungal_Pneumocystis','4':'Lipoid','5':'Viral_COVID','6':'Viral_MERS',
-                  '7':'Viral_SARS','8':'Tuberculosis'}
-
     # List of all classification algorithms
-    dir_list = os.listdir(results_directory)
+    dir_list = os.listdir(final_directory)
 
     # Iterate over each of the classes (xlsx/csv files)
-    for key, value in class_list.items():
+    for key, value in key_mapping.items():
         file_name = value + '.csv'
         final_data_frame = pd.DataFrame(columns=columns)
         for directory in dir_list:
             # For each  classification algorithm, we need to check each of the classes
-            classification_path = results_directory + '\\' + directory
+            classification_path = final_directory + '\\' + directory
             class_list = os.listdir(classification_path)
             print('Classifier: '+directory)
 
@@ -40,11 +36,13 @@ def consolidate_each_class():
             class_array = np.full(shape=(df_size[0]), fill_value=str(directory))
 
             avg_results = partial_result.describe()
-            mean = avg_results['mean']
-            std = avg_results['std']
+            print(avg_results)
+            print(avg_results['smote'])
+            mean = avg_results.iloc[1,:]
+            std = avg_results.iloc[0,:]
             partial_result = partial_result.append(mean)
             partial_result = partial_result.append(std)
-            class_array = class_array.append(['mean','std'])
+            class_array = np.append(class_array, ['mean','std'])
             partial_result['classifier'] = class_array
 
             final_data_frame = final_data_frame.append(partial_result, ignore_index=True)
@@ -56,7 +54,7 @@ def consolidate_each_class():
 
         # Create files for classification approach
         ## Logic to create the file to compare each classification algorithm
-        unique_classification_algorithms = np.unique(final_data_frame['classifier'])
+        unique_classification_algorithms = np.unique(dir_list)
         classifier_comparison = pd.DataFrame(columns=unique_classification_algorithms)
 
         for resampling in columns:

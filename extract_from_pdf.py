@@ -17,9 +17,8 @@ def write_df_csv(path, results_df):
     final_results_df.to_csv(path,sep=';')
 
 
-def extract_from_pdfs():
-    algorithms = ['nb']
-    per_class_dir = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class\\'
+def extract_from_pdfs(results_directory, class_list, algorithms):
+    per_class_dir = results_directory + '\\per_class\\'
 
     if not os.path.isdir(per_class_dir):
         os.mkdir(per_class_dir)
@@ -28,9 +27,8 @@ def extract_from_pdfs():
     for algorithm in algorithms:
         columns = ['adasyn','borderline','none','ros','smote','smote-enn','smote-tomek']
 
-        key_mapping = {'0':'Bacterial_Klebsiella','1':'Bacterial_Legionella',
-                       '2':'Bacterial_Streptococcus','3':'Fungal_Pneumocystis','4':'Lipoid','5':'Viral_COVID','6':'Viral_MERS','7':'Viral_SARS','8':'Tuberculosis'}
-        rf_directory = 'C:/Users/Fabio Barros/Desktop/Qualificação/Novos Resultados - Sem Rydls/'+ algorithm + '/'
+
+        rf_directory = results_directory + algorithm + '\\'
         result_dir =  per_class_dir + algorithm+'\\'
 
         if not os.path.isdir(result_dir):
@@ -38,7 +36,7 @@ def extract_from_pdfs():
 
         experiments = os.listdir(rf_directory)
 
-        for key, value in key_mapping.items():
+        for key, value in class_list.items():
             results_df = pd.DataFrame(columns=columns)
             for exp in experiments:
                 confusion_matrix_dirs = rf_directory + exp + '\\per_pipeline\\confusion_matrix\\'
@@ -57,9 +55,9 @@ def extract_from_pdfs():
                             first_page = pdf.pages[0]
                             print('Page Width: {}'.format(first_page.width))
                             print('Page Height: {}'.format(first_page.height))
-                            cropped_page = first_page.crop((657, 190,(first_page.width-260), (first_page.height-650)),relative=False)
+                            cropped_page = first_page.crop((657, 190,(first_page.width-130), (first_page.height-650)),relative=False)
                             text = cropped_page.extract_text()
-                            array = np.fromstring(text, sep='\n').reshape(-1,9)
+                            array = np.fromstring(text, sep='\n').reshape(-1,10)
                             data_frame = pd.DataFrame(array)
                             print('Recall for class {}'.format(value))
                             #print(data_frame.iloc[int(key), int(key)])

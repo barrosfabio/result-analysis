@@ -3,22 +3,20 @@ import pandas as pd
 import numpy as np
 
 columns = ['none', 'ros', 'smote', 'borderline', 'adasyn', 'smote-enn', 'smote-tomek']
-results_directory = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\consolidated'
-final_directory = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\consolidated\\all'
 
-def consolidate_all():
-
+def consolidate_all(consolidated_results_dir):
+    final_directory = consolidated_results_dir + '\\all'
 
     if not os.path.isdir(final_directory):
         os.mkdir(final_directory)
 
     # List all the files in the current directory
-    files = os.listdir(results_directory)
+    files = os.listdir(consolidated_results_dir)
 
     final_data_frame = pd.DataFrame(columns=columns)
     for file in files:
         # For each  classification algorithm, we need to check each of the classes
-        file_path = results_directory + '\\' + file
+        file_path = consolidated_results_dir + '\\' + file
         print('File being processed: '+file_path)
 
         if file != 'all':

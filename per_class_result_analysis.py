@@ -67,10 +67,13 @@ def calculate_ranks(figure_path, data_frame, algorithm_analyzed):
 	plt.show()
 
 
-results_file_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\consolidated_per_class\\'
-analysis_results_path = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class_analysis'
-classifier_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class_analysis\\classifier'
-resampling_analysis = 'C:\\Users\\Fabio Barros\\Desktop\\Qualificação\\Novos Resultados - Sem Rydls\\per_class_analysis\\resampling'
+results_directory = "C:\\Users\\Fabio Barros\\Desktop\\IJCNN Novos Resultados\\Rydls + C19 IDC\\"
+results_file_path =  results_directory + 'consolidated_per_class\\'
+analysis_results_path = results_directory + 'per_class_analysis'
+classifier_analysis = results_directory + 'per_class_analysis\\classifier'
+resampling_analysis = results_directory + 'per_class_analysis\\resampling'
+
+
 if not os.path.isdir(analysis_results_path):
 	os.mkdir(analysis_results_path)
 	os.mkdir(classifier_analysis)
